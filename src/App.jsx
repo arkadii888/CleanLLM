@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import Sidebar from './Sidebar';
 import './App.css';
 
 function App() {
@@ -7,6 +8,7 @@ function App() {
     ]);
     const [input, setInput] = useState('');
     const [isGenerating, setIsGenerating] = useState(false);
+    const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
     const messagesEndRef = useRef(null);
 
@@ -63,40 +65,48 @@ function App() {
     };
 
     return (
-        <div className="app-container">
-            <div className="chat-area">
-                {messages.map((msg, index) => (
-                    <div
-                        key={index}
-                        className={`message-wrapper ${msg.role === 'user' ? 'user' : 'ai'}`}
-                    >
-                        {(msg.content || (isGenerating && index === messages.length - 1)) && (
-                            <div className={`message-bubble ${msg.role === 'user' ? 'user' : 'ai'}`}>
-                                {msg.content}
-                            </div>
-                        )}
-                    </div>
-                ))}
-                <div ref={messagesEndRef} />
-            </div>
+        <div style={{ display: 'flex', flexDirection: 'row', width: '100vw', height: '100vh' }}>
 
-            <div className="input-area">
-                <input
-                    className="chat-input"
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
-                    placeholder={isGenerating ? "AI is thinking..." : "Type a message..."}
-                    disabled={isGenerating}
-                />
-                <button
-                    className="send-button"
-                    onClick={sendMessage}
-                    disabled={isGenerating}
-                    style={{ opacity: isGenerating ? 0.6 : 1, cursor: isGenerating ? 'default' : 'pointer' }}
-                >
-                    {isGenerating ? '...' : 'SEND'}
-                </button>
+            <Sidebar
+                isCollapsed={isSidebarCollapsed}
+                toggleSidebar={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+            />
+
+            <div className="app-container" style={{ flex: 1, position: 'relative' }}>
+                <div className="chat-area">
+                    {messages.map((msg, index) => (
+                        <div
+                            key={index}
+                            className={`message-wrapper ${msg.role === 'user' ? 'user' : 'ai'}`}
+                        >
+                            {(msg.content || (isGenerating && index === messages.length - 1)) && (
+                                <div className={`message-bubble ${msg.role === 'user' ? 'user' : 'ai'}`}>
+                                    {msg.content}
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                    <div ref={messagesEndRef} />
+                </div>
+
+                <div className="input-area">
+                    <input
+                        className="chat-input"
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                        onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
+                        placeholder={isGenerating ? "AI is thinking..." : "Type a message..."}
+                        disabled={isGenerating}
+                    />
+                    <button
+                        className="send-button"
+                        onClick={sendMessage}
+                        disabled={isGenerating}
+                        style={{ opacity: isGenerating ? 0.6 : 1, cursor: isGenerating ? 'default' : 'pointer' }}
+                    >
+                        {isGenerating ? '...' : 'SEND'}
+                    </button>
+                </div>
             </div>
         </div>
     );

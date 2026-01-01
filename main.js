@@ -112,6 +112,7 @@ const createWindow = () => {
         width: 1000,
         height: 1000,
         backgroundColor: '#303446',
+        autoHideMenuBar: true,
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
@@ -119,6 +120,7 @@ const createWindow = () => {
         }
     });
 
+    win.setMenu(null);
     win.loadURL('http://localhost:5173');
 };
 
