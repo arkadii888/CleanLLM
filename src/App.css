@@ -159,7 +159,7 @@ button, input, textarea {
     background-color: var(--ctp-mantle);
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 25px 20px;
     transition: width 0.3s cubic-bezier(0.2, 0, 0, 1);
     overflow: hidden;
     flex-shrink: 0;
@@ -209,10 +209,8 @@ button, input, textarea {
     border-radius: 22px;
     background-color: var(--ctp-blue);
     color: var(--ctp-text-on-accent);
-
     font-weight: 600;
     font-size: 14px;
-
     border: none;
     cursor: pointer;
     white-space: nowrap;

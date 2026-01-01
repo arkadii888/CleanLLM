@@ -113,6 +113,7 @@ const createWindow = () => {
         height: 1000,
         backgroundColor: '#303446',
         autoHideMenuBar: true,
+        icon: path.join(__dirname, 'assets', process.platform === 'win32' ? 'icon-transparent.ico' : 'icon-transparent.png'),
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
