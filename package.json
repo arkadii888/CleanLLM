@@ -1,0 +1,23 @@
+{
+  "name": "cleanllm",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.1.2",
+    "electron": "^39.2.7",
+    "vite": "^7.3.0"
+  },
+  "dependencies": {
+    "node-llama-cpp": "^3.14.5",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
+  }
+}

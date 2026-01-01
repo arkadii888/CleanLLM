@@ -1,0 +1,14 @@
+node_modules/
+dist/
+out/
+build/
+.idea/
+
+*.log
+.DS_Store
+Thumbs.db
+
+.env
+
+models/*.gguf
+models/*.bin
