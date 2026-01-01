@@ -3,9 +3,10 @@ import './App.css';
 
 function App() {
     const [messages, setMessages] = useState([
-        { role: 'ai', content: 'Hello! I am CleanLLM. Ready to assist you.' }
+        { role: 'ai', content: 'System initialized. Ready to chat.' }
     ]);
     const [input, setInput] = useState('');
+    const [isGenerating, setIsGenerating] = useState(false);
 
     const messagesEndRef = useRef(null);
 
@@ -17,16 +18,48 @@ function App() {
         scrollToBottom();
     }, [messages]);
 
+    useEffect(() => {
+        if (!window.electronAPI) return;
+
+        const removeTokenListener = window.electronAPI.onToken((token) => {
+            setMessages(prev => {
+                const newMessages = [...prev];
+                const lastMsg = newMessages[newMessages.length - 1];
+
+                if (lastMsg.role === 'ai') {
+                    lastMsg.content += token;
+                    return newMessages;
+                } else {
+                    return [...prev, { role: 'ai', content: token }];
+                }
+            });
+        });
+
+        const removeDoneListener = window.electronAPI.onDone(() => {
+            setIsGenerating(false);
+        });
+
+        return () => {
+        };
+    }, []);
+
     const sendMessage = () => {
-        if (!input.trim()) return;
+        if (!input.trim() || isGenerating) return;
 
-        setMessages(prev => [...prev, { role: 'user', content: input }]);
-        const currentInput = input;
+        const userText = input;
+
+        setMessages(prev => [
+            ...prev,
+            { role: 'user', content: userText },
+            { role: 'ai', content: '' }
+        ]);
+
         setInput('');
+        setIsGenerating(true);
 
-        setTimeout(() => {
-            setMessages(prev => [...prev, { role: 'ai', content: `I received your message: "${currentInput}"` }]);
-        }, 500);
+        if (window.electronAPI) {
+            window.electronAPI.sendPrompt(userText);
+        }
     };
 
     return (
@@ -37,9 +70,11 @@ function App() {
                         key={index}
                         className={`message-wrapper ${msg.role === 'user' ? 'user' : 'ai'}`}
                     >
-                        <div className={`message-bubble ${msg.role === 'user' ? 'user' : 'ai'}`}>
-                            {msg.content}
-                        </div>
+                        {(msg.content || (isGenerating && index === messages.length - 1)) && (
+                            <div className={`message-bubble ${msg.role === 'user' ? 'user' : 'ai'}`}>
+                                {msg.content}
+                            </div>
+                        )}
                     </div>
                 ))}
                 <div ref={messagesEndRef} />
@@ -51,10 +86,16 @@ function App() {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
-                    placeholder="Type a message..."
+                    placeholder={isGenerating ? "AI is thinking..." : "Type a message..."}
+                    disabled={isGenerating}
                 />
-                <button className="send-button" onClick={sendMessage}>
-                    SEND
+                <button
+                    className="send-button"
+                    onClick={sendMessage}
+                    disabled={isGenerating}
+                    style={{ opacity: isGenerating ? 0.6 : 1, cursor: isGenerating ? 'default' : 'pointer' }}
+                >
+                    {isGenerating ? '...' : 'SEND'}
                 </button>
             </div>
         </div>
