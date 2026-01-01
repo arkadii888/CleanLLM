@@ -7,3 +7,7 @@ CleanLLM combines the privacy of local models with the power of remote APIs. We 
 * **Hybrid Workflow:** Seamlessly switch between local models and cloud providers.
 * **Model Context Protocol (MCP):** Native support for the standard, enabling deep integration with your data and tools.
 * **Smart UX:** All professional settings are accessible in a single click but remain hidden by default to keep your workspace clutter-free.
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
