@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, shell } from 'electron';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { getLlama, LlamaChatSession } from "node-llama-cpp";
@@ -121,8 +121,15 @@ const createWindow = () => {
         }
     });
 
+    //win.webContents.openDevTools();
     win.setMenu(null);
     win.loadURL('http://localhost:5173');
+    win.webContents.setWindowOpenHandler(({ url }) => {
+        if (url.startsWith('https:') || url.startsWith('http:')) {
+            shell.openExternal(url);
+        }
+        return { action: 'deny' };
+    });
 };
 
 app.whenReady().then(async () => {

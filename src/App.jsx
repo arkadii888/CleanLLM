@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Sidebar from './Sidebar';
 import './App.css';
+import Sidebar from './Sidebar';
+import MarkdownRenderer from './MarkdownRenderer';
 
 function App() {
     const [messages, setMessages] = useState([
@@ -81,7 +82,11 @@ function App() {
                         >
                             {(msg.content || (isGenerating && index === messages.length - 1)) && (
                                 <div className={`message-bubble ${msg.role === 'user' ? 'user' : 'ai'}`}>
-                                    {msg.content}
+                                    {msg.role === 'ai' ? (
+                                        <MarkdownRenderer content={msg.content} />
+                                    ) : (
+                                        msg.content
+                                    )}
                                 </div>
                             )}
                         </div>
