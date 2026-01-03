@@ -5,19 +5,14 @@
     color: inherit;
     width: 100%;
     max-width: 100%;
-    overflow-x: hidden;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
 
-.markdown-body p {
-    margin: 0 0 12px 0;
-}
-.markdown-body p:last-child {
-    margin-bottom: 0;
-}
+.markdown-body p { margin: 0 0 12px 0; }
+.markdown-body p:last-child { margin-bottom: 0; }
 
-.markdown-body h1,
-.markdown-body h2,
-.markdown-body h3 {
+.markdown-body h1, .markdown-body h2, .markdown-body h3 {
     margin-top: 24px;
     margin-bottom: 12px;
     font-weight: 600;
@@ -26,39 +21,10 @@
     padding-bottom: 6px;
 }
 
-.markdown-body > *:first-child {
-    margin-top: 0;
-}
-
-.markdown-body h1 { font-size: 1.4em; }
-.markdown-body h2 { font-size: 1.25em; }
-.markdown-body h3 { font-size: 1.1em; }
-
-.markdown-body ul,
-.markdown-body ol {
-    padding-left: 24px;
-    margin-bottom: 12px;
-}
-.markdown-body li {
-    margin-bottom: 4px;
-}
-
 .markdown-body a {
     color: #8caaee;
     text-decoration: none;
     border-bottom: 1px dashed rgba(140, 170, 238, 0.5);
-    transition: all 0.2s;
-}
-.markdown-body a:hover {
-    border-bottom-style: solid;
-    filter: brightness(1.1);
-}
-
-.markdown-body img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin: 8px 0;
 }
 
 .markdown-body code {
@@ -68,6 +34,8 @@
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.9em;
     color: #e5c890;
+    white-space: pre-wrap;
+    word-break: break-word;
 }
 
 .code-block-wrapper {
@@ -75,9 +43,9 @@
     border-radius: 12px;
     background-color: #1e1e1e;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     width: 100%;
     max-width: 100%;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -88,13 +56,10 @@
     padding: 8px 16px;
     font-size: 12px;
     color: #a5adce;
-    font-family: sans-serif;
-    text-transform: uppercase;
     font-weight: 600;
     border-bottom: 1px solid rgba(255,255,255,0.05);
     display: flex;
     justify-content: space-between;
-    user-select: none;
 }
 
 .code-block-wrapper pre {
@@ -104,6 +69,7 @@
     width: 100%;
     max-width: 100%;
     overflow-x: auto !important;
+    white-space: pre !important;
 }
 
 .code-block-wrapper pre code {
@@ -112,63 +78,37 @@
     border-radius: 0;
     color: inherit;
     font-size: 14px;
+    white-space: pre !important;
 }
 
 .markdown-body table {
     display: block;
     width: 100%;
-    max-width: 100%;
     overflow-x: auto;
     border-collapse: collapse;
     margin: 16px 0;
-    font-size: 14px;
+    border-spacing: 0;
 }
 
-.markdown-body th,
-.markdown-body td {
+.markdown-body th, .markdown-body td {
     padding: 10px 16px;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    text-align: left;
-    white-space: nowrap;
+    min-width: 120px;
+    word-break: normal;
+    white-space: normal;
 }
 
 .markdown-body th {
-    background-color: rgba(255, 255, 255, 0.08);
+    background-color: rgba(255, 255, 255, 0.05);
     font-weight: 600;
-    color: #fff;
+    text-align: left;
 }
 
-.markdown-body tr:nth-child(even) {
-    background-color: rgba(255, 255, 255, 0.02);
-}
-
-.markdown-body *::-webkit-scrollbar,
-.code-block-wrapper pre::-webkit-scrollbar {
+.markdown-body *::-webkit-scrollbar {
     height: 6px;
     width: 6px;
-    background-color: transparent;
 }
-
-.markdown-body *::-webkit-scrollbar-track,
-.code-block-wrapper pre::-webkit-scrollbar-track {
-    background-color: transparent;
-    margin: 0 4px;
-}
-
-.markdown-body *::-webkit-scrollbar-thumb,
-.code-block-wrapper pre::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, 0.15);
-    border-radius: 10px;
-    border: 2px solid transparent;
-    background-clip: content-box;
-}
-
-.markdown-body *::-webkit-scrollbar-thumb:hover,
-.code-block-wrapper pre::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(255, 255, 255, 0.4);
-}
-
-.markdown-body *::-webkit-scrollbar-corner,
-.code-block-wrapper pre::-webkit-scrollbar-corner {
-    background: transparent;
+.markdown-body *::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
 }

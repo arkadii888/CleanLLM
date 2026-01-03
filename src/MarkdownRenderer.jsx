@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { memo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import './MarkdownRenderer.css';
 
-const MarkdownRenderer = ({ content }) => {
+const MarkdownRenderer = memo(({ content }) => {
     return (
         <div className="markdown-body">
             <ReactMarkdown
@@ -47,6 +47,8 @@ const MarkdownRenderer = ({ content }) => {
             </ReactMarkdown>
         </div>
     );
-};
+}, (prevProps, nextProps) => {
+    return prevProps.content === nextProps.content;
+});
 
 export default MarkdownRenderer;
